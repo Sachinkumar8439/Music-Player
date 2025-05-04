@@ -4,9 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUSIC-player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="main">
+            <div class="imageframe">
+                <div class="imagebox">
+                    <img id="songimage" src="images/aukat song mp3 jassi gill.jpg" width="100px" alt="imagnot uploaded">
+                    <!-- <img  src="music.png" width="100px" alt="imagnot uploaded"> -->
+                </div>
+                <div class="musicinfo">
+                    <p>nikle current jassi gill & neha kakkar</p>
+                </div>
+
+            </div>
+            <div class="listbox">
+                <ul id="list-items">
+                    <!-- <li>Bohemian Rhapsody - Queen</li>
+                    <li>Hotel California - Eagles</li>
+                    <li>Stairway to Heaven - Led Zeppelin</li>
+                    <li>Imagine - John Lennon</li>
+                    <li>Hey Jude - The Beatles</li>
+                    <li>Smells Like Teen Spirit - Nirvana</li>
+                    <li>Wonderwall - Oasis</li>
+                    <li>Yesterday - The Beatles</li>
+                    <li>Sweet Child O' Mine - Guns N' Roses</li>
+                    <li>Let It Be - The Beatles</li>
+                    <li>Billie Jean - Michael Jackson</li>
+                    <li>Shape of You - Ed Sheeran</li>
+                    <li>Rolling in the Deep - Adele</li>
+                    <li>Blinding Lights - The Weeknd</li>
+                    <li>Shallow - Lady Gaga & Bradley Cooper</li> -->
+                </ul>
+                
+            </div>
+        </div>
+        <div  class="controlsection">
+            <div id="rangebox">
+                <p id="current-time">01:25</p>
+                <audio id="audiotag" src="audios/Aukaat.mp3"></audio>
+                <input id="timeSlider" type="range" min="0" max="100" value="0" step="0.1">
+                <p id="duration">02:23</p>
+                
+            </div>
+            <div class="controlerbox">
+                <button>time</button>
+                <button onclick="playpre()"><img src="previous.png" alt="prev"></button>
+                <button id="playpausebtn" onclick="handleplaying()"><img src="play-buttton.png" alt=""></button>
+                <button onclick="playnext()"><img src="next.png" alt="next"></button>
+                <button id="loopbtn" onclick="togelloop()"><img src="exit-loop.svg" alt=""></button>
+            </div>
+           
+        </div>
+    </div>
+ <script src="data.js"></script>
+ <script src="script.js"></script>
     
 </body>
 </html>
