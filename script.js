@@ -38,7 +38,7 @@ const changesong = (element) => {
   };
   previousMusicElement = element;
   setcurrentdata();
-    playpausebtn.firstChild.setAttribute("src", `pause.png`);
+    playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
     music.play();
     isplaying = true;
 };
@@ -47,12 +47,12 @@ const togelloop  = ()=>{
   console.log(looper)
   if(loop)
   {
-    looper.firstElementChild.setAttribute('src','exit-loop.svg')
+    looper.firstElementChild.setAttribute('src','./icons/exit-loop.svg')
     loop = false;
 
   }
   else{
-    looper.firstElementChild.setAttribute('src','arrow.png')
+    looper.firstElementChild.setAttribute('src','./icons/arrow.png')
     loop=true;
 
   }
@@ -79,11 +79,11 @@ const handleplaying = () => {
   console.log(playpausebtn.firstChild);
   console.log("clicked i am");
   if (isplaying) {
-    playpausebtn.firstChild.setAttribute("src", `play-buttton.png`);
+    playpausebtn.firstChild.setAttribute("src", `./icons/play-buttton.png`);
     music.pause();
     isplaying = false;
   } else {
-    playpausebtn.firstChild.setAttribute("src", `pause.png`);
+    playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
     music.play();
     isplaying = true;
   }
@@ -152,7 +152,7 @@ const playnext = () => {
       }
       setcurrentdata();
       music.play();
-      playpausebtn.firstChild.setAttribute("src", `pause.png`);
+      playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
       isplaying=true;
 
       
