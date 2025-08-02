@@ -13,14 +13,27 @@
             <div class="imageframe">
                 <div class="imagebox">
                     <img id="songimage" src="images/aukat song mp3 jassi gill.jpg" width="100px" alt="imagnot uploaded">
+
                     <!-- <img  src="music.png" width="100px" alt="imagnot uploaded"> -->
                 </div>
                 <div class="musicinfo">
-                    <p>nikle current jassi gill & neha kakkar</p>
+                    <img id="mainmusicgif" src="icons/sound-8563_256.gif" alt="">
+                    <p id="musicname"></p>
+                    <!-- <p style="align-self: self-start;" id="musicdescription">Yo yo honey singh feat , raftaar payal singh</p> -->
                 </div>
 
             </div>
             <div class="listbox">
+                <div class="navbar">
+                    <p style="color: black;outline: 2px solid rgb(175, 172, 172);border-radius: 5px;padding: 3px;">
+                       < Back
+                    </p>
+                   
+                    <div class="extrabuttons">
+                        <button onclick="handleimport()" id="importbtn">Import</button>
+                    </div>
+                    
+                </div>
                 <ul id="list-items">
                     <!-- <li>Bohemian Rhapsody - Queen</li>
                     <li>Hotel California - Eagles</li>
@@ -50,7 +63,7 @@
                 
             </div>
             <div class="controlerbox">
-                <button>time</button>
+                <button onclick="togglelist()">LIST</button>
                 <button onclick="playpre()"><img src="./icons/previous.png" alt="prev"></button>
                 <button id="playpausebtn" onclick="handleplaying()"><img src="./icons/play-buttton.png" alt=""></button>
                 <button onclick="playnext()"><img src="./icons/next.png" alt="next"></button>

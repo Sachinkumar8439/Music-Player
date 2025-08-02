@@ -1,11 +1,14 @@
 const currenttimetag = document.getElementById("current-time");
 const durationtag = document.getElementById("duration");
-
+const importbtn = document.getElementById("importbtn");
 const slider = document.getElementById("timeSlider");
 const playpausebtn = document.getElementById("playpausebtn");
 const listitems = document.getElementById("list-items");
 const music = document.getElementById("audiotag");
 const songimage = document.getElementById("songimage");
+const mainmusicgif = document.getElementById('mainmusicgif');
+// const musicdescription = document.getElementById('musicdescription')
+const musicname = document.getElementById('musicname')
 let loop = false;
 let previousMusicElement = null;
 let predictedelement = null;
@@ -15,6 +18,7 @@ let currentmusic = {
   audioUrl: songs[0].audioUrl,
   imgUrl: songs[0].imgUrl,
 };
+musicname.innerText = currentmusic.name;
 let predictedsong = { ...currentmusic };
 const setcurrentdata = () => {
   music.setAttribute("src", currentmusic.audioUrl);
@@ -26,7 +30,6 @@ const changesong = (element) => {
   if (previousMusicElement) {
     previousMusicElement.classList.remove("currentmusicstyle");
   }
-  console.log("this ", document.getElementById(currentmusic._id));
   element.classList.add("currentmusicstyle");
   const idcontent = element.id.split("../");
   currentmusic = {
@@ -38,224 +41,186 @@ const changesong = (element) => {
   };
   previousMusicElement = element;
   setcurrentdata();
-    playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
-    music.play();
-    isplaying = true;
+
+  playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
+  musicname.innerText = currentmusic.name
+
+  music.play();
+  isplaying = true;
 };
 const looper = document.getElementById("loopbtn");
-const togelloop  = ()=>{
-  console.log(looper)
-  if(loop)
-  {
-    looper.firstElementChild.setAttribute('src','./icons/exit-loop.svg')
+const togelloop = () => {
+  if (loop) {
+    looper.firstElementChild.setAttribute("src", "./icons/exit-loop.svg");
     loop = false;
-
+  } else {
+    looper.firstElementChild.setAttribute("src", "./icons/arrow.png");
+    loop = true;
   }
-  else{
-    looper.firstElementChild.setAttribute('src','./icons/arrow.png')
-    loop=true;
-
-  }
- console.log("loop togels")
-}
+};
 const addsongs = () => {
   songs.forEach((song) => {
     let li = document.createElement("li");
     li.innerText = `${song.name}`;
     li.id = `${song.id}../${song.name}../${song.imgUrl}../${song.audioUrl}`;
-    console.log(li);
-    li.addEventListener("click",(e)=>{e.preventDefault();changesong(e.target)});
+    li.addEventListener("click", (e) => {
+      e.preventDefault();
+      changesong(e.target);
+    });
     listitems.appendChild(li);
-});
-listitems.firstElementChild.classList.add("currentmusicstyle");
-previousMusicElement = listitems.firstElementChild;
-predictedelement = listitems.firstElementChild;
-currenttimetag.innerText = '00:00';
+  });
+  listitems.firstElementChild.classList.add("currentmusicstyle");
+  previousMusicElement = listitems.firstElementChild;
+  predictedelement = listitems.firstElementChild;
+  currenttimetag.innerText = "00:00";
 };
 
 addsongs();
 let isplaying = false;
 const handleplaying = () => {
-  console.log(playpausebtn.firstChild);
-  console.log("clicked i am");
   if (isplaying) {
     playpausebtn.firstChild.setAttribute("src", `./icons/play-buttton.png`);
     music.pause();
+    mainmusicgif.style.width = '0px'
     isplaying = false;
   } else {
     playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
     music.play();
+        mainmusicgif.style.width = 'auto';
+
     isplaying = true;
   }
 };
 const playpre = () => {
+  if (loop) {
+    music.currentTime = 0;
+    music.play();
+    return;
+  }
 
-   if(loop)
-    {
-      music.currentTime=0;
-      music.play();
-      return;
-    }
-   
-    if(previousMusicElement) 
-    {
-        previousMusicElement.classList.remove("currentmusicstyle");
-
-    }
+  if (previousMusicElement) {
+    previousMusicElement.classList.remove("currentmusicstyle");
+  }
 
   if (currentmusic.id <= 1) {
     currentmusic = songs.at(-1);
-    console.log(currentmusic);
-    
+
     listitems.lastElementChild.classList.add("currentmusicstyle");
     previousMusicElement = listitems.lastElementChild;
-  }
-  else
-  {
-      currentmusic = songs[currentmusic.id - 2];
-      previousMusicElement.previousElementSibling.classList.add('currentmusicstyle');
-      previousMusicElement = previousMusicElement.previousElementSibling;
-
+  } else {
+    currentmusic = songs[currentmusic.id - 2];
+    previousMusicElement.previousElementSibling.classList.add(
+      "currentmusicstyle"
+    );
+    previousMusicElement = previousMusicElement.previousElementSibling;
   }
   setcurrentdata();
   music.play();
-
 };
 const playnext = () => {
-  console.log("itruns")
-  if(loop)
-  {
+  if (loop) {
     music.currentTime = 0.0;
     music.play();
     return;
   }
-    if(previousMusicElement) 
-        {
-            
-            previousMusicElement.classList.remove("currentmusicstyle");
-    
-        }
-    
-      if (currentmusic.id >= songs.length) {
-        currentmusic = songs[0];
-        console.log(currentmusic);
-        
-        listitems.firstElementChild.classList.add("currentmusicstyle");
-        previousMusicElement = listitems.firstElementChild;
-      }
-      else
-      {
-          currentmusic = songs[currentmusic.id];
-          previousMusicElement.nextElementSibling.classList.add('currentmusicstyle');
-          previousMusicElement = previousMusicElement.nextElementSibling;
-    
-      }
-      setcurrentdata();
-      music.play();
-      playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
-      isplaying=true;
+  if (previousMusicElement) {
+    previousMusicElement.classList.remove("currentmusicstyle");
+  }
 
-      
-  console.log("clicked i am");
+  if (currentmusic.id >= songs.length) {
+    currentmusic = songs[0];
+
+    listitems.firstElementChild.classList.add("currentmusicstyle");
+    previousMusicElement = listitems.firstElementChild;
+  } else {
+    currentmusic = songs[currentmusic.id];
+    previousMusicElement.nextElementSibling.classList.add("currentmusicstyle");
+    previousMusicElement = previousMusicElement.nextElementSibling;
+  }
+  setcurrentdata();
+  music.play();
+  playpausebtn.firstChild.setAttribute("src", `./icons/pause.png`);
+  isplaying = true;
+
 };
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  return `${minutes.toString().padStart(2, "0")}:${secs
+    .toString()
+    .padStart(2, "0")}`;
 }
 music.addEventListener("loadedmetadata", () => {
-  slider.max = music.duration; 
+  slider.max = music.duration;
   durationtag.innerText = formatTime(music.duration);
-  console.log("audio duration", formatTime(music.duration));
 });
 music.addEventListener("timeupdate", () => {
   slider.value = music.currentTime;
 
-  currenttimetag.innerText = formatTime(music.currentTime)
-  if(music.currentTime === music.duration) playnext();
-  console.log(`Current Time:`, formatTime(music.currentTime));
+  currenttimetag.innerText = formatTime(music.currentTime);
+  if (music.currentTime === music.duration) playnext();
 });
 
 slider.addEventListener("input", () => {
   music.currentTime = slider.value;
-  console.log(`Slider moved to: ${slider.value} seconds`);
 });
 
 // let mute = false;
-const handleslide = (type)=>{
-  if(predictedelement) 
-    {
-        predictedelement.classList.remove("predictedsong");
-
-    }
-  // console.log("down")
-  if(type === 'down')
-  {
-   
-      if (predictedsong.id >= songs.length) {
-        predictedsong = songs[0];
-        console.log(predictedsong);
-        
-        listitems.firstElementChild.classList.add("predictedsong");
-        predictedelement = listitems.firstElementChild;
-      }
-      else
-      {
-        predictedsong = songs[predictedsong.id];
-        predictedelement.nextElementSibling.classList.add('predictedsong');
-        predictedelement = predictedelement.nextElementSibling;
-    
-      }
-
+const handleslide = (type) => {
+  if (predictedelement) {
+    predictedelement.classList.remove("predictedsong");
   }
-  else
-  {
-    if(predictedsong.id <= 1) {
+  // console.log("down")
+  if (type === "down") {
+    if (predictedsong.id >= songs.length) {
+      predictedsong = songs[0];
+
+      listitems.firstElementChild.classList.add("predictedsong");
+      predictedelement = listitems.firstElementChild;
+    } else {
+      predictedsong = songs[predictedsong.id];
+      predictedelement.nextElementSibling.classList.add("predictedsong");
+      predictedelement = predictedelement.nextElementSibling;
+    }
+  } else {
+    if (predictedsong.id <= 1) {
       predictedsong = songs.at(-1);
-      // console.log(currentmusic);
-      
+
       listitems.lastElementChild.classList.add("predictedsong");
       predictedelement = listitems.lastElementChild;
+    } else {
+      predictedsong = songs[predictedsong.id - 2];
+      predictedelement.previousElementSibling.classList.add("predictedsong");
+      predictedelement = predictedelement.previousElementSibling;
     }
-    else
-    {
-        predictedsong = songs[predictedsong.id - 2];
-        predictedelement.previousElementSibling.classList.add('predictedsong');
-        predictedelement = predictedelement.previousElementSibling;
-  
-    }
-
   }
-
-}
-const togelmute = ()=>{
-  if(music.muted) music.muted = false;
+};
+const togelmute = () => {
+  if (music.muted) music.muted = false;
   else music.muted = true;
-}
+};
 document.addEventListener("keydown", (event) => {
-  // Convert the key to lowercase for consistent handling
   const key = event.key.toLowerCase();
-  event.preventDefault();
+  // event.preventDefault();
 
-  // Check which key is pressed
   switch (key) {
     case "arrowright":
-      playnext(); // Call your custom function to play the next track
+      playnext(); 
       console.log("Right Arrow pressed");
       break;
 
     case "arrowup":
-      // event.preventDefault();
+     
       console.log("Up Arrow pressed");
-      handleslide('up');
+      handleslide("up");
       break;
     case "arrowdown":
       console.log("down Arrow pressed");
-      handleslide('down');
+      handleslide("down");
       break;
 
     case "arrowleft":
-      playpre(); // Call your custom function to play the previous track
+      playpre(); 
       console.log("Left Arrow pressed");
       break;
 
@@ -264,18 +229,15 @@ document.addEventListener("keydown", (event) => {
       break;
 
     case " ":
-      event.preventDefault(); // Prevent page scrolling
-      handleplaying(); // Call your custom function to handle play/pause
-      console.log("Space pressed");
+      event.preventDefault(); 
+      handleplaying();
       break;
 
     case "l":
-      togelloop(); // Call your custom function for play/pause or other logic
-      console.log("'l' or 'L' pressed");
+      togelloop(); 
       break;
     case "enter":
       changesong(predictedelement);
-      console.log("'l' or 'L' pressed");
       break;
 
     default:
@@ -283,3 +245,40 @@ document.addEventListener("keydown", (event) => {
       break;
   }
 });
+
+let importmusic = 0;
+const handleimport = (e) => {
+  let audioObject = null;
+
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "audio/*";
+
+  input.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      audioObject = new Audio(fileURL);
+      let li = document.createElement("li");
+      li.innerText = `${file.name}`;
+      li.id = `${songs.length + 1}../${
+        file.name
+      }../${"icons/music.png"}../${fileURL}`;
+      li.addEventListener("click", (e) => {
+        e.preventDefault();
+        changesong(e.target);
+      });
+      listitems.appendChild(li);
+      const newsong = {
+        id: songs.length + 1,
+        name: file.name.split('.')[0],
+        imgUrl: `icons/music.png`,
+        audioUrl: fileURL,
+      };
+      songs.push(newsong);
+    }
+  });
+
+  input.click();
+};
+
